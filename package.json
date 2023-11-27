@@ -1,0 +1,20 @@
+{
+  "name": "tin_project",
+  "version": "1.0.0",
+  "description": "Simple game for my school project ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "esbuild src/main.ts --bundle --outfile=dist/out.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node-lts": "^18.12.5",
+    "@types/node": "^20.9.3",
+    "esbuild": "0.19.7",
+    "kaboom": "^3000.1.17",
+    "typescript": "^5.3.2"
+  },
+  "type": "module"
+}
