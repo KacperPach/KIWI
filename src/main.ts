@@ -1,62 +1,46 @@
-import kaboom, { GameObj, PosComp } from 'kaboom';
+import {GameObj,PosComp,Vec2} from 'kaboom';
+import {onKeyDown, onUpdate, onDraw,RED, BLACK, GREEN, LEFT, RIGHT, UP, DOWN ,rgb,drawPolygon,deg2rad, area, add, pos, polygon, circle, vec2, color, uvquad, usePostEffect, rotate, loadShader,anchor, outline} from "./game.js"; //temp fix when you have time to better understand ts compiler options better (would be nice if imporet ends in .ts)
+import {DEBUG} from "./constants/game_constants.js"
+import {PLAYER_SPEED, PLAYER_SPINE_LENGTH, SPINE_SPACEING, POINT_SIZE, BODY_R} from "./constants/player_constants.js"
+import Spine from "./entities/player/spine.js"
+import Body from './entities/player/body.js';
 
-const DEBUG = true;
-const PLAYER_SPEED = 100;
-const PLAYER_SPINE_LENGTH = 10
-const SPINE_SPACEING = 100
-const SPINE_SPEED = 100;
-const POINT_SIZE = 30;
+const player_pos:GameObj<PosComp> = add([pos(vec2(100))]); 
 
-const k = kaboom();
-// CONSTANTS
-const {RED, BLACK, GREEN, LEFT, RIGHT, UP, DOWN} = k;
-// GLOBAL METHODS 
-const {onKeyDown, onUpdate, drawLine, drawRect, onDraw} = k
-const {add, pos, circle, vec2, color,opacity, rotate,rect,anchor, follow, outline} = k
+const spine = new Spine(PLAYER_SPINE_LENGTH);
+// const bodyPointsR = createBodyPoints(spine.positions);
+// const bodyPointsL = createBodyPoints(spine.positions);
 
-const spine: Array<GameObj<PosComp>> = [];
-for (let i = 0; i < PLAYER_SPINE_LENGTH; i++) {
-  spine.push(  
-    add([
-    pos(vec2(10,10)),
-    DEBUG?circle(POINT_SIZE):'',
-    DEBUG?color(GREEN):'',
-    "spineDot"
-  ]))
-}
 
 const cir1 = add([
-    pos(vec2(100,100)),
-    DEBUG?circle(POINT_SIZE):'',
-    DEBUG?color(GREEN):'',
-    "head"
+    pos(vec2(500,500)),
+    DEBUG?uvquad(POINT_SIZE*2, POINT_SIZE*2):'',
+    DEBUG?color(RED):'',
+    outline(1000,RED),
+    "head",
+    outline(10)
 ])
 
-
-function followSpine (toFollow:GameObj, following:GameObj) {
-  if (following.pos.dist(toFollow.pos)>SPINE_SPACEING)
-    following.move(toFollow.pos.sub(following.pos).scale(2))
-}
-
-onDraw(() => { 
+cir1.onDraw(() => {
+  cir1.pos = player_pos.pos;
 })
 
-onUpdate('spineDot', () => {
-  followSpine(cir1, spine[0])
-  for (let i = 1; i < spine.length; i++) {
-    followSpine(spine[i-1],spine[i]);
-  }
-})
+const body = new Body(spine.positions, player_pos.pos);
+spine.update(cir1);
+body.update(spine);
+body.draw();
+body.updateHead(spine.getNodeAt(0),player_pos);
 
+// temp testing only movement  
 onKeyDown('a', () => {
-  cir1.move(LEFT.scale(PLAYER_SPEED))
+  player_pos.move(LEFT.scale(PLAYER_SPEED))
 })
 onKeyDown('w', () => {
-  cir1.move(UP.scale(PLAYER_SPEED))
+  player_pos.move(UP.scale(PLAYER_SPEED))
 })
 onKeyDown('s', () => {
-  cir1.move(DOWN.scale(PLAYER_SPEED))
+  player_pos.move(DOWN.scale(PLAYER_SPEED))
 })
 onKeyDown('d', () => {
-  cir1.move(RIGHT.scale(PLAYER_SPEED))
+  player_pos.move(RIGHT.scale(PLAYER_SPEED))
 })
