@@ -14,7 +14,8 @@ export default class Body {
     constructor(spineElemetPositions: Array<Vec2>, head : Vec2) { // temp probably not creating it right
         this.bodyPointsR = this.#createFirstBodyPoints(spineElemetPositions);
         this.bodyPointsL = this.#createFirstBodyPoints(spineElemetPositions);
-        this.bodyHeadPoints = this.#createHeadPoints(spineElemetPositions[0],head);
+        this.bodyHeadPoints = this.#createHalfCirclePoints(this.bodyPointsL[0].pos,head);
+        this.bodyTailPoints = this.#createHalfCirclePoints(this.bodyPointsL[0].pos, spineElemetPositions[spineElemetPositions.length-1])
     }
 
     /**
@@ -39,7 +40,7 @@ export default class Body {
         return bodyPoints;
     }
 
-    #createHeadPoints(lastSpineNode:Vec2, headPos: Vec2) {
+    #createHalfCirclePoints(lastSpineNode:Vec2, headPos: Vec2) {
         const bodyPoints : Array<GameObj<PosComp>> = new Array();
         const resolution = 20;
         const startingAngle = lastSpineNode.angle(headPos);
@@ -68,6 +69,17 @@ export default class Body {
         })
     }
 
+    updateTail( lastSpineNode: GameObj<PosComp>) {
+        onUpdate('head', () => {
+            const resolution = 20;
+            const startingAngle = this.bodyPointsL[this.bodyPointsL.length-1].pos.angle(lastSpineNode.pos);
+    
+            for (let i = 0; i <  this.bodyTailPoints.length; i++) {
+                this.bodyTailPoints[i].pos = vec2(lastSpineNode.pos.x + Math.cos(deg2rad(startingAngle+i*resolution+170))*BODY_R, lastSpineNode.pos.y + Math.sin(deg2rad(startingAngle+i*resolution+170))*BODY_R);
+            }
+        })
+    }
+
     update(spine: Spine) {
         onUpdate('head', () => {
             for (let i = 1; i < spine.length; i++) {
@@ -83,9 +95,10 @@ export default class Body {
     draw() {
         // test polygon  
         onDraw(() => {
-            //temp ind belongs to on add not ondraw
+            //temp ind belongs to on add not ondraw 
+            // extremly bad triangulation needs to be fixed at some point 
             const ind = [];
-            const size = this.bodyPointsR.length * 2;
+            const size = this.bodyPointsR.length * 2 + this.bodyHeadPoints.length*2;
             // ind body 
             for (let i = 0; i < size/2; i++) {
                 ind.push(i,1+i,size-i-1,  
@@ -93,14 +106,9 @@ export default class Body {
                         i,1+i,size-i-1,
                         size-2-i,1+i,size-i-1)  
             }
-            //ind head 
-            ind.push(size-1, size+this.bodyHeadPoints.length-1,0)
-            for (let i = 0; i < this.bodyHeadPoints.length; i++) {
-                ind.push(size-1, size+this.bodyHeadPoints.length-1-i,size+this.bodyHeadPoints.length-2-i)
-            }
             
             drawPolygon({
-                pts: this.bodyPointsL.map(e=> e.pos).concat(this.bodyPointsR.map(e=> e.pos).reverse()).concat(this.bodyHeadPoints.map(e=> e.pos).reverse()),
+                pts: this.bodyPointsL.map(e=> e.pos).concat(this.bodyTailPoints.map(e=> e.pos).reverse()).concat(this.bodyPointsR.map(e=> e.pos).reverse()).concat(this.bodyHeadPoints.map(e=> e.pos).reverse()),
                 indices: ind,
                 color: rgb(102, 44, 10),
                 outline: {color: BLACK, width: 10, join: 'round'}

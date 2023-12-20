@@ -8,9 +8,6 @@ import Body from './entities/player/body.js';
 const player_pos:GameObj<PosComp> = add([pos(vec2(100))]); 
 
 const spine = new Spine(PLAYER_SPINE_LENGTH);
-// const bodyPointsR = createBodyPoints(spine.positions);
-// const bodyPointsL = createBodyPoints(spine.positions);
-
 
 const cir1 = add([
     pos(vec2(500,500)),
@@ -30,6 +27,8 @@ spine.update(cir1);
 body.update(spine);
 body.draw();
 body.updateHead(spine.getNodeAt(0),player_pos);
+body.updateTail(spine.getNodeAt(spine.length-1));
+
 
 // temp testing only movement  
 onKeyDown('a', () => {
