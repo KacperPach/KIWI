@@ -7,3 +7,4 @@ let ctx = await esbuild.context({
   })
   
   await ctx.watch()
+  
