@@ -1,8 +1,8 @@
 
 import { GameObj, PosComp } from 'kaboom';
-import { add, pos, vec2, circle, color, GREEN, onUpdate } from "../../game.js"; // fix to .ts when u get smarter 🤓
-import { POINT_SIZE, SPINE_SPACEING } from '../../constants/player_constants.js'
-import { DEBUG } from '../../constants/game_constants.js'
+import { add, pos, vec2, circle, color, GREEN, onUpdate } from "../../../game.js"; // fix to .ts when u get smarter 🤓
+import { POINT_SIZE, SPINE_SPACEING } from '../../../constants/player_constants.js'
+import { DEBUG } from '../../../constants/game_constants.js'
 
 // Spine logic 
 export default class Spine{

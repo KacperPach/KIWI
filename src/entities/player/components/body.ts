@@ -1,7 +1,7 @@
 import { GameObj, PosComp, Vec2 } from "kaboom";
-import { BLACK, RED, add, circle, color, deg2rad, drawCircle, drawPolygon, onDraw, onUpdate, pos, rgb, vec2 } from "../../game.js";
-import { BODY_R, POINT_SIZE } from "../../constants/player_constants.js";
-import { DEBUG } from "../../constants/game_constants.js";
+import { BLACK, RED, add, circle, color, deg2rad, drawCircle, drawPolygon, onDraw, onUpdate, pos, rgb, vec2 } from "../../../game.js";
+import { BODY_R, POINT_SIZE } from "../../../constants/player_constants.js";
+import { DEBUG } from "../../../constants/game_constants.js";
 import Spine from "./spine.js";
 
 // Body logic 
