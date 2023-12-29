@@ -6,10 +6,15 @@ import {
   RIGHT,
   UP,
   add,
+  anchor,
   color,
+  loadSprite,
   onKeyDown,
   outline,
   pos,
+  rad2deg,
+  rotate,
+  sprite,
   uvquad,
   vec2,
 } from "../../game.js";
@@ -31,24 +36,26 @@ export class Player {
     startpos: Vec2 = vec2(100),
     spine_length: number = PLAYER_SPINE_LENGTH
   ) {
+    loadSprite("head", '../src/sprites/player_head.png');
+
+    const head = add([
+        pos(vec2(500, 500)),
+        DEBUG ? sprite("head") : "",
+        rotate(90),
+        anchor('left'),
+        "head",
+      ]);
+
     this.#player_pos.pos = startpos;
     this.#spine = new Spine(spine_length);
     this.#body = new Body(this.#spine.positions, this.#player_pos.pos);
 
-    const cir1 = add([
-      pos(vec2(500, 500)),
-      DEBUG ? uvquad(POINT_SIZE * 2, POINT_SIZE * 2) : "",
-      DEBUG ? color(RED) : "",
-      outline(1000, RED),
-      "head",
-      outline(10),
-    ]);
-
-    cir1.onDraw(() => {
-      cir1.pos = this.#player_pos.pos;
+    head.onDraw(() => {
+      head.pos = this.#player_pos.pos;
+      head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos)+180;     
     });
 
-    this.#spine.update(cir1);
+    this.#spine.update(head);
     this.#body.update(this.#spine);
     this.#body.draw();
     this.#body.updateHead(this.#spine.getNodeAt(0), this.#player_pos);
