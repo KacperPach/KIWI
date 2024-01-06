@@ -23,18 +23,22 @@ import {
   PLAYER_SPEED,
   PLAYER_SPINE_LENGTH,
   POINT_SIZE,
+  START_HEALTH,
 } from "../../constants/player_constants.js";
 import Body from "./components/body.js";
 import { DEBUG } from "../../constants/game_constants.js";
+import { HealthBar } from "../../screen/components/HealthBar.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
   #spine: Spine;
   #body: Body;
+  #health: number = START_HEALTH;
+  #healthBar: HealthBar;
 
   constructor(
     startpos: Vec2 = vec2(100),
-    spine_length: number = PLAYER_SPINE_LENGTH
+    spine_length: number = PLAYER_SPINE_LENGTH,
   ) {
     loadSprite("head", '../src/sprites/player_head.png');
 
@@ -62,6 +66,8 @@ export class Player {
     this.#body.updateTail(this.#spine.getNodeAt(this.#spine.length - 1));
 
     this.setupMovement();
+
+    this.#healthBar = new HealthBar();
   }
 
   setupMovement() {
@@ -78,5 +84,10 @@ export class Player {
     onKeyDown("d", () => {
       this.#player_pos.move(RIGHT.scale(PLAYER_SPEED));
     });
+  }
+
+  damage(amount: number) {
+    this.#health -= amount;
+    this.#healthBar.update(this.#health);
   }
 }

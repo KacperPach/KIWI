@@ -1,18 +1,10 @@
+import { Fly } from './entities/enemy/fly.js';
 import { Player } from './entities/player/player.js';
-import { add, addKaboom, area, loadSprite, onCollide, pos, sprite } from './game.js';
+import { add, addKaboom, area, loadSprite, onCollide, pos, sprite, vec2 } from './game.js';
+
 
 const p = new Player();
 
-loadSprite("fly", "../src/sprites/fly.png");
-add([
-    pos(800,800),
-    sprite("fly"),
-    area(),
-    "enemy"
-])
+const fly = new Fly(p, vec2(400, 400));
 
-onCollide("bodyDot", "enemy", (a) => {
-    console.log("test");
-    
-     addKaboom(a.pos);
-});
+const fly2 = new Fly(p, vec2(600, 400));
