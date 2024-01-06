@@ -1,5 +1,5 @@
 import { GameObj, PosComp, Vec2 } from "kaboom";
-import { BLACK, RED, add, circle, color, deg2rad, drawCircle, drawPolygon, onDraw, onUpdate, pos, rgb, vec2 } from "../../../game.js";
+import { BLACK, RED, add, area, circle, color, deg2rad, drawCircle, drawPolygon, onDraw, onUpdate, opacity, pos, rgb, vec2 } from "../../../game.js";
 import { BODY_R, POINT_SIZE } from "../../../constants/player_constants.js";
 import { DEBUG } from "../../../constants/game_constants.js";
 import Spine from "./spine.js";
@@ -31,8 +31,9 @@ export default class Body {
             bodyPoints.push(
                 add([
                     pos(vec2(spineElemetPositions[i].x + Math.cos(angle)*BODY_R, spineElemetPositions[i].y + Math.sin(angle)*BODY_R)),
-                    DEBUG?circle(POINT_SIZE):'',
-                    DEBUG?color(RED):'',
+                    circle(POINT_SIZE),
+                    opacity(0.0),
+                    area(),
                     "bodyDot"
             ]));
         }
@@ -50,8 +51,9 @@ export default class Body {
                 add([ 
                     pos(headPos.x + Math.cos(i)*BODY_R,
                         headPos.y + Math.sin(i)*BODY_R),
-                    DEBUG?circle(5):'',
-                    DEBUG?color(RED):''
+                    circle(POINT_SIZE),
+                    opacity(0.0),
+                    area(),
                     ])
                 )
         }
@@ -111,7 +113,7 @@ export default class Body {
                 pts: this.bodyPointsL.map(e=> e.pos).concat(this.bodyTailPoints.map(e=> e.pos).reverse()).concat(this.bodyPointsR.map(e=> e.pos).reverse()).concat(this.bodyHeadPoints.map(e=> e.pos).reverse()),
                 indices: ind,
                 color: rgb(102, 44, 10),
-                outline: {color: BLACK, width: 10, join: 'round'}
+                //outline: {color: BLACK, width: 10, join: 'round'}
             })
         })
     }

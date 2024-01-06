@@ -40,7 +40,7 @@ export class Player {
 
     const head = add([
         pos(vec2(500, 500)),
-        DEBUG ? sprite("head") : "",
+        sprite("head"),
         rotate(90),
         anchor('left'),
         "head",
