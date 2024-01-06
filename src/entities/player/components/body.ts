@@ -34,7 +34,8 @@ export default class Body {
                     circle(POINT_SIZE),
                     opacity(0.0),
                     area(),
-                    "bodyDot"
+                    "bodyDot",
+                    "PlayerDamagePoint"
             ]));
         }
 

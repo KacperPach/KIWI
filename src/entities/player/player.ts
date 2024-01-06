@@ -7,6 +7,7 @@ import {
   UP,
   add,
   anchor,
+  area,
   color,
   loadSprite,
   onKeyDown,
@@ -47,7 +48,9 @@ export class Player {
         sprite("head"),
         rotate(90),
         anchor('left'),
+        area(),
         "head",
+        "PlayerDamagePoint"
       ]);
 
     this.#player_pos.pos = startpos;
@@ -68,6 +71,10 @@ export class Player {
     this.setupMovement();
 
     this.#healthBar = new HealthBar();
+  }
+
+  get pos() {
+    return this.#player_pos.pos;
   }
 
   setupMovement() {

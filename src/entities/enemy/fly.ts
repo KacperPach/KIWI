@@ -11,9 +11,12 @@ export class Fly implements EnemyInterface {
     this.target = target;
     loadSprite("fly", "../src/sprites/fly.png");
     this.body = add([pos(position), sprite("fly"), area(), "enemy"]);
-    this.body.onCollide("bodyDot", () => {   
+    this.body.onCollide("PlayerDamagePoint", () => {   
         this.damage();
      })
+    this.body.onUpdate(() => {
+        this.body.moveTo(this.target.pos, 100);
+    })
   }
 
   destroy() {
