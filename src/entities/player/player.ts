@@ -9,13 +9,16 @@ import {
   anchor,
   area,
   color,
+  drawSprite,
   loadSprite,
   onKeyDown,
   outline,
   pos,
   rad2deg,
   rotate,
+  scale,
   sprite,
+  time,
   uvquad,
   vec2,
 } from "../../game.js";
@@ -42,6 +45,7 @@ export class Player {
     spine_length: number = PLAYER_SPINE_LENGTH,
   ) {
     loadSprite("head", '../src/sprites/player_head.png');
+    loadSprite("tail", '../src/sprites/tail.png');
 
     const head = add([
         pos(vec2(500, 500)),
@@ -51,7 +55,17 @@ export class Player {
         area(),
         "head",
         "PlayerDamagePoint"
-      ]);
+    ]);
+    
+    const tail = add([
+      pos(vec2(500, 500)),
+      sprite("tail"),
+      rotate(90),
+      anchor('left'),
+      area(),
+      scale(0.5),
+      "tail",
+    ]);
 
     this.#player_pos.pos = startpos;
     this.#spine = new Spine(spine_length);
@@ -59,7 +73,12 @@ export class Player {
 
     head.onDraw(() => {
       head.pos = this.#player_pos.pos;
-      head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos)+180;     
+      head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos)+180;   
+    });
+
+    tail.onDraw(() => { 
+      tail.pos = this.#spine.getNodeAt(this.#spine.length-1).pos ;
+      tail.angle = this.#spine.getNodeAt(this.#spine.length-2).pos.angle(tail.pos)+180 + 10* Math.sin(time() *10);
     });
 
     this.#spine.update(head);
