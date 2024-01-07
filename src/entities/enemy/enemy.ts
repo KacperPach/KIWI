@@ -6,6 +6,7 @@ export interface EnemyInterface {
     target : Player;
     body: GameObj<AreaComp>;
 
-    damage() :void; 
+    damageTarget(damage : number) :void; 
+    damageSelfe(damage : number) :void;
     destroy() :void;
 }

@@ -32,6 +32,7 @@ import {
 import Body from "./components/body.js";
 import { DEBUG } from "../../constants/game_constants.js";
 import { HealthBar } from "../../screen/components/HealthBar.js";
+import { Bark } from "./components/items/Bark.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
@@ -89,7 +90,13 @@ export class Player {
 
     this.setupMovement();
 
+    const ba = new Bark(head);
+
     this.#healthBar = new HealthBar();
+  }
+
+  get headNode() {
+    return this.#player_pos;
   }
 
   get pos() {
