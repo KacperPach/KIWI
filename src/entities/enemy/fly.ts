@@ -18,13 +18,12 @@ export class Fly implements EnemyInterface {
      })
 
     this.body.onUpdate(() => {
-        
-
         this.body.moveTo(this.target.pos, 70);
     })
 
     this.body.onDeath(() => {
         this.destroy();
+        this.target.addExperience(1);
     })
   }
 

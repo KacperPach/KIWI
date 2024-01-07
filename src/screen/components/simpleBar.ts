@@ -1,4 +1,4 @@
-import { Rect, RectComp , GameObj, Vec2} from "kaboom";
+import { Rect, RectComp , GameObj, Vec2, ColorComp} from "kaboom";
 import { START_HEALTH } from "../../constants/player_constants.js";
 import { RED, add, color, loadSprite, outline, pos, rect, sprite } from "../../game.js";
 
@@ -7,7 +7,7 @@ export class SimpleBar {
     hpShadow : GameObj<RectComp>;
     width: number;
     MaxHP: number;
-    constructor(startPositon: Vec2, width: number, spriteName: string, spritePath: string, maxPoints: number ) {
+    constructor(startPositon: Vec2, width: number, spriteName: string, spritePath: string, maxPoints: number, barColor : ColorComp ) {
         this.width = width;
         this.MaxHP = maxPoints;
         loadSprite(spriteName, spritePath)
@@ -38,7 +38,7 @@ export class SimpleBar {
         this.hp = add([
             rect(this.width-16,40, {radius:10}),
             pos(startPositon.add(8,8)),
-            color(192,17,17)
+            barColor
         ])
         
     }

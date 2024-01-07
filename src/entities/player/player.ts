@@ -35,6 +35,7 @@ import Body from "./components/body.js";
 import { DEBUG } from "../../constants/game_constants.js";
 import { HealthBar } from "../../screen/components/HealthBar.js";
 import { Bark } from "./components/items/Bark.js";
+import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
@@ -42,6 +43,8 @@ export class Player {
   #body: Body;
   #health: number = START_HEALTH;
   #healthBar: HealthBar;
+  #experience: number = 0;
+  #experienceBar: ExperienceBar;
 
   constructor(
     startpos: Vec2 = vec2(width(), height()).scale(0.5),
@@ -95,6 +98,7 @@ export class Player {
     const ba = new Bark(head);
 
     this.#healthBar = new HealthBar();
+    this.#experienceBar = new ExperienceBar();
   }
 
   get headNode() {
@@ -124,5 +128,10 @@ export class Player {
   damage(amount: number) {
     this.#health -= amount;
     this.#healthBar.update(this.#health);
+  }
+
+  addExperience(amount: number) { 
+    this.#experience += amount;
+    this.#experienceBar.update(this.#experience);
   }
 }
