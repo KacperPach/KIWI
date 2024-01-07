@@ -1,5 +1,5 @@
 
-import { GameObj, PosComp } from 'kaboom';
+import { GameObj, PosComp, Vec2 } from 'kaboom';
 import { add, pos, vec2, circle, color, GREEN, onUpdate } from "../../../game.js"; // fix to .ts when u get smarter 🤓
 import { POINT_SIZE, SPINE_SPACEING } from '../../../constants/player_constants.js'
 import { DEBUG } from '../../../constants/game_constants.js'
@@ -9,11 +9,11 @@ export default class Spine{
 
     spine: Array<GameObj<PosComp>> = [];
 
-    constructor(spineElements :number) {
+    constructor(spineElements :number, startpos: Vec2 = vec2(100)) {
         for (let i = 0; i < spineElements; i++) {
             this.spine.push(  
                 add([
-                pos(vec2(300-i*SPINE_SPACEING,600)),
+                pos(startpos),
                 DEBUG?circle(POINT_SIZE):'',
                 DEBUG?color(GREEN):'',
                 "spineDot"

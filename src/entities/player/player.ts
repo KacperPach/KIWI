@@ -10,6 +10,7 @@ import {
   area,
   color,
   drawSprite,
+  height,
   loadSprite,
   onKeyDown,
   outline,
@@ -21,6 +22,7 @@ import {
   time,
   uvquad,
   vec2,
+  width,
 } from "../../game.js";
 import Spine from "./components/spine.js";
 import {
@@ -42,7 +44,7 @@ export class Player {
   #healthBar: HealthBar;
 
   constructor(
-    startpos: Vec2 = vec2(100),
+    startpos: Vec2 = vec2(width(), height()).scale(0.5),
     spine_length: number = PLAYER_SPINE_LENGTH,
   ) {
     loadSprite("head", '../src/sprites/player_head.png');
@@ -69,7 +71,7 @@ export class Player {
     ]);
 
     this.#player_pos.pos = startpos;
-    this.#spine = new Spine(spine_length);
+    this.#spine = new Spine(spine_length, startpos.sub(vec2(70)));
     this.#body = new Body(this.#spine.positions, this.#player_pos.pos);
 
     head.onDraw(() => {
