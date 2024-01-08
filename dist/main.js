@@ -4007,7 +4007,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     body;
     constructor(target, position) {
       this.target = target;
-      loadSprite("fly", "../src/sprites/fly.png");
+      loadSprite("fly", "/src/sprites/fly.png");
       this.body = add([pos(position), sprite("fly"), area(), health(1), "enemy"]);
       this.body.onCollide("PlayerDamagePoint", () => {
         this.damageTarget();
