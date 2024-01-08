@@ -1,11 +1,11 @@
 import { AreaComp, GameObj, HealthComp, PosComp, Vec2 } from "kaboom";
-import { add, addKaboom, area, dt, health, loadSprite, pos, sprite } from "../../game.js";
+import { add, addKaboom, area, color, dt, health, loadSprite, pos, sprite } from "../../game.js";
 import { Player } from "../player/player.js";
 import { EnemyInterface } from "./enemy.js";
 
 export class Fly implements EnemyInterface {
   target: Player;
-  #animationTimer: number = 0;
+  animationTimer: number = 0;
   body: GameObj<AreaComp | PosComp | HealthComp>;
 
   constructor(target: Player, position: Vec2) { // use HealthComp
