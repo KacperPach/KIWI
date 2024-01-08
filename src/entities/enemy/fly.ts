@@ -10,7 +10,7 @@ export class Fly implements EnemyInterface {
 
   constructor(target: Player, position: Vec2) { // use HealthComp
     this.target = target;
-    loadSprite("fly", "../src/sprites/fly.png");
+    loadSprite("fly", "/src/sprites/fly.png");
     this.body = add([pos(position), sprite("fly"), area(), health(1), "enemy"]);
 
     this.body.onCollide("PlayerDamagePoint", () => {   
