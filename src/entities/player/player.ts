@@ -50,8 +50,8 @@ export class Player {
     startpos: Vec2 = vec2(width(), height()).scale(0.5),
     spine_length: number = PLAYER_SPINE_LENGTH,
   ) {
-    loadSprite("head", '../src/sprites/player_head.png');
-    loadSprite("tail", '../src/sprites/tail.png');
+    loadSprite("head", 'src/sprites/player_head.png');
+    loadSprite("tail", 'src/sprites/tail.png');
 
     const head = add([
         pos(vec2(500, 500)),

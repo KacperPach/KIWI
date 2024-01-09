@@ -11,7 +11,6 @@ const p = new Player();
 
 loop(3, () => { 
     const angle = Math.random()*2*Math.PI;
-    console.log(angle);
     
     const point = p.pos.add(vec2(Math.cos(angle)* 1000, Math.sin(angle)*1000));
     new Fly(p, point);

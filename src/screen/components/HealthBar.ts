@@ -4,6 +4,6 @@ import { SimpleBar } from "./simpleBar.js";
 
 export class HealthBar extends SimpleBar{
     constructor() {
-        super(vec2(10,10), 400, "healthBar", '../src/sprites/HP.png', START_HEALTH, color(192,17,17));
+        super(vec2(10,10), 400, "healthBar", 'src/sprites/HP.png', START_HEALTH, color(192,17,17));
     }
 }
