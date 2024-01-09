@@ -8,7 +8,7 @@ export class Bark implements ItemInterface {
   AnimationTimer : number = 0;
 
   constructor( anchorNode : GameObj<PosComp | RotateComp> ) {
-    loadSprite("bark", "../src/sprites/bark.png");
+    loadSprite("bark", "src/sprites/bark.png");
     this.body = add([pos(0), anchor("botleft"), sprite("bark"), scale(), rotate(0), opacity(1), area({scale: 1.2}),"playerAttack"]);
     this.animate(anchorNode)
     this.body.onUpdate(() => {
