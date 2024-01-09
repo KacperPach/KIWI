@@ -18,7 +18,7 @@ export class Fly implements EnemyInterface {
      })
 
     this.body.onUpdate(() => {
-        this.body.moveTo(this.target.pos, 70);
+        this.body.moveTo(this.target.pos, 70 + 10* target.level);
     })
 
     this.body.onDeath(() => {

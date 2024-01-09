@@ -104,17 +104,20 @@ export class Player {
 
     this.setupMovement();
 
-     const ba = new Bark(this.#head,0);
-    new TailAttack(this.#tail,0.1);
-    // const ba2 = new Bark(this.#head,0.1);
-    new Bomb(this.#spine.getNodeAt(this.#spine.length-1), 0.1);
-
     this.#healthBar = new HealthBar();
     this.#experienceBar = new ExperienceBar();
   }
 
-  get headNode() {
+  get headPos() {
     return this.#player_pos;
+  }
+
+  get head() {
+    return this.#head;
+  }
+
+  get tail() {
+    return this.#tail;
   }
 
   get pos() {
@@ -133,7 +136,7 @@ export class Player {
   }
 
   addExperience(amount: number) {
-    if (this.#experience + amount > 10) {
+    if (this.#experience + amount > this.#level*10) {
       this.levelUp();
     } else {
       this.#experience += amount;
@@ -141,9 +144,13 @@ export class Player {
     }
   }
 
+  get level() {
+    return this.#level;
+  }
+
   levelUp() { 
     this.#level++;
-    new UpgradeMenu();
+    new UpgradeMenu(this);
     this.#experience = 0;
     this.#experienceBar.update(this.#experience);
     this.#experienceBar.updateMaxPoints(this.#level*10);

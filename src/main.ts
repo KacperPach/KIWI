@@ -4,13 +4,14 @@ import { debug, loop, vec2 } from './game.js';
 import { UpgradeMenu } from './screen/upgradeMenu/components/UpgradeMenu.js';
 
 const p = new Player();
-new UpgradeMenu();
+new UpgradeMenu(p); // first upgrade menu
 // spawn enemies in random locations based on r away from player and random angle
 loop(3, () => { 
+    for(let i = 0; i < 1*p.level; i++) {
     const angle = Math.random()*2*Math.PI;
-    
     const point = p.pos.add(vec2(Math.cos(angle)* 1000, Math.sin(angle)*1000));
     new Fly(p, point);
+    }
 });
 
 

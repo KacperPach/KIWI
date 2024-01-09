@@ -11,7 +11,7 @@ export class Bomb {
         loadSprite("bomb", "src/sprites/bomb.png");
         this.timerOffset = timerOffset;
         
-        wait(BOMB_RESET_TIME, () => {
+        wait(BOMB_RESET_TIME+timerOffset, () => {
         loop(BOMB_RESET_TIME+timerOffset, () => { 
             const bomb = add([pos(anchorNode.pos), anchor("center"), scale(0.8), sprite("bomb")])
             this.animate(bomb);
@@ -22,7 +22,7 @@ export class Bomb {
         bomb.onUpdate(() => {
             bomb.scale = vec2(wave(0.7,.9, time()+this.timerOffset));
         })
-        wait(BOMB_RESET_TIME, () => {
+        wait(BOMB_RESET_TIME+this.timerOffset, () => {
             bomb.destroy();
             this.explode(bomb);
         })
