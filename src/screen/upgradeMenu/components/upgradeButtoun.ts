@@ -15,6 +15,7 @@ export class UpgradeButton {
             pos(position),
             rect(145,145, {radius: 10}), 
             scale(2),
+            z(11),
             anchor('center'), 
             area(),
             color(44,44,44), 
@@ -22,6 +23,7 @@ export class UpgradeButton {
         this.body.add([
             sprite(spriteName),
             anchor('center'),
+            z(12),
             area(),
             "button"
         ])

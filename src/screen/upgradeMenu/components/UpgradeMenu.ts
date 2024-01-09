@@ -1,5 +1,5 @@
 import { GameObj, PosComp } from "kaboom";
-import { add, anchor, color, health, height, pos, rect, vec2, width } from "../../../game.js";
+import { add, anchor, color, health, height, pos, rect, vec2, width, z } from "../../../game.js";
 import { UpgradeButton } from "./upgradeButtoun.js";
 
 export class UpgradeMenu {
@@ -16,6 +16,7 @@ export class UpgradeMenu {
         this.body = add([ 
                 rect(width()*0.7, height()*0.5, {radius: 20}),
                 color(100,100,100),
+                z(10),
                 anchor('center'),
                 pos(posCenter),
                 "UpgradeMenu"]);
