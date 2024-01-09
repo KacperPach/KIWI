@@ -1,4 +1,4 @@
-import { GameObj, PosComp, Vec2 } from "kaboom";
+import { EventController, GameObj, PosComp, Vec2 } from "kaboom";
 import { BLACK, RED, add, area, circle, color, deg2rad, drawCircle, drawPolygon, onDraw, onUpdate, opacity, pos, rgb, vec2 } from "../../../game.js";
 import { BODY_R, POINT_SIZE } from "../../../constants/player_constants.js";
 import { DEBUG } from "../../../constants/game_constants.js";
@@ -10,6 +10,7 @@ export default class Body {
     bodyPointsL: Array<GameObj<PosComp>> = [];
     bodyHeadPoints: Array<GameObj<PosComp>> = [];
     bodyTailPoints: Array<GameObj<PosComp>> = [];
+    drawEvent: EventController | null = null;
 
     constructor(spineElemetPositions: Array<Vec2>, head : Vec2) { // temp probably not creating it right
         this.bodyPointsR = this.#createFirstBodyPoints(spineElemetPositions);
@@ -97,7 +98,7 @@ export default class Body {
 
     draw() {
         // test polygon  
-        onDraw(() => {
+        this.drawEvent = onDraw(() => {
             //temp ind belongs to on add not ondraw 
             // extremly bad triangulation needs to be fixed at some point 
             const ind = [];
@@ -117,5 +118,23 @@ export default class Body {
                 //outline: {color: BLACK, width: 10, join: 'round'}
             })
         })
+    }
+    
+    destroy() {
+        this.bodyPointsR.forEach(element => {
+            element.destroy();
+        });
+        this.bodyPointsL.forEach(element => {
+            element.destroy();
+        });
+        this.bodyHeadPoints.forEach(element => {
+            element.destroy();
+        });
+        this.bodyTailPoints.forEach(element => {
+            element.destroy();
+        });
+        if(this.drawEvent != null)
+            this.drawEvent.cancel();
+        onUpdate('playerAttack', () => {})
     }
 }

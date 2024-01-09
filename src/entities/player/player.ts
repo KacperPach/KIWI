@@ -1,4 +1,4 @@
-import { GameObj, PosComp, Vec2 } from "kaboom";
+import { GameObj, PosComp, RotateComp} from "kaboom";
 import {
   DOWN,
   LEFT,
@@ -9,10 +9,13 @@ import {
   anchor,
   area,
   color,
+  deg2rad,
   drawSprite,
   height,
   loadSprite,
+  mousePos,
   onKeyDown,
+  onMouseDown,
   outline,
   pos,
   rad2deg,
@@ -36,24 +39,32 @@ import { DEBUG } from "../../constants/game_constants.js";
 import { HealthBar } from "../../screen/components/HealthBar.js";
 import { Bark } from "./components/items/Bark.js";
 import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
+import { UpgradeMenu } from "../../screen/upgradeMenu/components/UpgradeMenu.js";
+import { Bomb } from "./components/items/Bomb.js";
+import { TailAttack } from "./components/items/TailAttak.js";
+import { AttackInterface } from "./components/items/componets/AttackInterface.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
+  #head: GameObj<PosComp | RotateComp>;
+  #tail: GameObj<PosComp | RotateComp>;
   #spine: Spine;
   #body: Body;
   #health: number = START_HEALTH;
   #healthBar: HealthBar;
   #experience: number = 0;
   #experienceBar: ExperienceBar;
+  #level: number = 1;
+  #items: Array<AttackInterface> = [];
 
   constructor(
-    startpos: Vec2 = vec2(width(), height()).scale(0.5),
+    startpos = vec2(width(), height()).scale(0.5),
     spine_length: number = PLAYER_SPINE_LENGTH,
   ) {
     loadSprite("head", 'src/sprites/player_head.png');
     loadSprite("tail", 'src/sprites/tail.png');
 
-    const head = add([
+    this.#head = add([
         pos(vec2(500, 500)),
         sprite("head"),
         rotate(90),
@@ -63,7 +74,7 @@ export class Player {
         "PlayerDamagePoint"
     ]);
     
-    const tail = add([
+    this.#tail = add([
       pos(vec2(500, 500)),
       sprite("tail"),
       rotate(90),
@@ -77,17 +88,17 @@ export class Player {
     this.#spine = new Spine(spine_length, startpos.sub(vec2(70)));
     this.#body = new Body(this.#spine.positions, this.#player_pos.pos);
 
-    head.onDraw(() => {
-      head.pos = this.#player_pos.pos;
-      head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos)+180;   
+    this.#head.onDraw(() => {
+      this.#head.pos = this.#player_pos.pos;
+      this.#head.angle = this.#spine.getNodeAt(0).pos.angle(this.#head.pos)+180;   
     });
 
-    tail.onDraw(() => { 
-      tail.pos = this.#spine.getNodeAt(this.#spine.length-1).pos ;
-      tail.angle = this.#spine.getNodeAt(this.#spine.length-2).pos.angle(tail.pos)+180 + 10* Math.sin(time() *10);
+    this.#tail.onDraw(() => { 
+      this.#tail.pos = this.#spine.getNodeAt(this.#spine.length-1).pos ;
+      this.#tail.angle = this.#spine.getNodeAt(this.#spine.length-2).pos.angle(this.#tail.pos)+180 + 10* Math.sin(time() *10);
     });
 
-    this.#spine.update(head);
+    this.#spine.update(this.#head);
     this.#body.update(this.#spine);
     this.#body.draw();
     this.#body.updateHead(this.#spine.getNodeAt(0), this.#player_pos);
@@ -95,14 +106,24 @@ export class Player {
 
     this.setupMovement();
 
-    const ba = new Bark(head);
-
     this.#healthBar = new HealthBar();
     this.#experienceBar = new ExperienceBar();
   }
 
-  get headNode() {
+  get headPos() {
     return this.#player_pos;
+  }
+
+  get head() {
+    return this.#head;
+  }
+
+  get health() {
+    return this.#health;
+  }
+
+  get tail() {
+    return this.#tail;
   }
 
   get pos() {
@@ -110,18 +131,8 @@ export class Player {
   }
 
   setupMovement() {
-    // temp testing only movement
-    onKeyDown("a", () => {
-      this.#player_pos.move(LEFT.scale(PLAYER_SPEED));
-    });
-    onKeyDown("w", () => {
-      this.#player_pos.move(UP.scale(PLAYER_SPEED));
-    });
-    onKeyDown("s", () => {
-      this.#player_pos.move(DOWN.scale(PLAYER_SPEED));
-    });
-    onKeyDown("d", () => {
-      this.#player_pos.move(RIGHT.scale(PLAYER_SPEED));
+    onMouseDown(() => {
+      this.#player_pos.moveTo(mousePos(), 100);
     });
   }
 
@@ -130,8 +141,43 @@ export class Player {
     this.#healthBar.update(this.#health);
   }
 
-  addExperience(amount: number) { 
-    this.#experience += amount;
+  addExperience(amount: number) {
+    if (this.#experience + amount > this.#level*10) {
+      this.levelUp();
+    } else {
+      this.#experience += amount;
+      this.#experienceBar.update(this.#experience);
+    }
+  }
+
+  get level() {
+    return this.#level;
+  }
+
+  levelUp() { 
+    this.#level++;
+    new UpgradeMenu(this);
+    this.#experience = 0;
     this.#experienceBar.update(this.#experience);
+    this.#experienceBar.updateMaxPoints(this.#level*10);
+    this.#health = START_HEALTH;
+    this.#healthBar.update(this.#health);
+  }
+
+  addItems(item: AttackInterface) {
+    this.#items.push(item);
+  }
+
+  destroy() {
+    this.#player_pos.destroy();
+    this.#head.destroy();
+    this.#tail.destroy();
+    this.#spine.destroy();
+    this.#body.destroy();
+    this.#healthBar.destroy();
+    this.#experienceBar.destroy();
+    this.#items.forEach((item) => {
+      item.destroy();
+    });
   }
 }
