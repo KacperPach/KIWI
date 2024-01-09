@@ -39,6 +39,7 @@ import { DEBUG } from "../../constants/game_constants.js";
 import { HealthBar } from "../../screen/components/HealthBar.js";
 import { Bark } from "./components/items/Bark.js";
 import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
+import { UpgradeMenu } from "../../screen/upgradeMenu/components/UpgradeMenu.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
@@ -49,6 +50,7 @@ export class Player {
   #healthBar: HealthBar;
   #experience: number = 0;
   #experienceBar: ExperienceBar;
+  #level: number = 1;
 
   constructor(
     startpos = vec2(width(), height()).scale(0.5),
@@ -99,7 +101,8 @@ export class Player {
 
     this.setupMovement();
 
-    const ba = new Bark(this.#head);
+    const ba = new Bark(this.#head,0);
+    const ba2 = new Bark(this.#head,0.1);
 
     this.#healthBar = new HealthBar();
     this.#experienceBar = new ExperienceBar();
@@ -124,8 +127,22 @@ export class Player {
     this.#healthBar.update(this.#health);
   }
 
-  addExperience(amount: number) { 
-    this.#experience += amount;
+  addExperience(amount: number) {
+    if (this.#experience + amount > 10) {
+      this.levelUp();
+    } else {
+      this.#experience += amount;
+      this.#experienceBar.update(this.#experience);
+    }
+  }
+
+  levelUp() { 
+    this.#level++;
+    new UpgradeMenu();
+    this.#experience = 0;
     this.#experienceBar.update(this.#experience);
+    this.#experienceBar.updateMaxPoints(this.#level*10);
+    this.#health = START_HEALTH;
+    this.#healthBar.update(this.#health);
   }
 }

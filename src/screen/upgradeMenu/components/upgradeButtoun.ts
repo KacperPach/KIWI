@@ -1,10 +1,10 @@
-import { AreaComp, GameObj, PosComp, SpriteComp, Vec2 } from "kaboom";
+import { AreaComp, GameObj, PosComp, ScaleComp, SpriteComp, Vec2 } from "kaboom";
 import { BLACK, RED, add, anchor, area, color, drawRect, loadSprite, outline, pos, rect, scale, sprite, vec2, z } from "../../../game.js";
 
 export class UpgradeButton {
     position : Vec2;
     onClick : Function;
-    body : GameObj<AreaComp>;
+    body : GameObj<AreaComp | ScaleComp>;
 
     constructor(position : Vec2, spriteName : string, spritePath : string, onClick : Function) {
         this.position = position;
@@ -27,6 +27,12 @@ export class UpgradeButton {
         ])
         this.body.onClick(() => {   
             this.onClick();
+        })
+        this.body.onHover(() => {
+            this.body.scale = vec2(2.1);
+        })
+        this.body.onHoverEnd(() => {
+            this.body.scale = vec2(2);
         })
 
     }

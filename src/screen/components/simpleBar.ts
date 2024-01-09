@@ -4,7 +4,6 @@ import { RED, add, color, loadSprite, outline, pos, rect, sprite } from "../../g
 
 export class SimpleBar {
     hp : GameObj<RectComp>;
-    hpShadow : GameObj<RectComp>;
     width: number;
     MaxHP: number;
     constructor(startPositon: Vec2, width: number, spriteName: string, spritePath: string, maxPoints: number, barColor : ColorComp ) {
@@ -29,12 +28,6 @@ export class SimpleBar {
             color(70,70,70)
         ])
 
-        this.hpShadow = add([
-            rect(this.width-16,40, {radius:5}),
-            pos(startPositon.add(8,8)),
-            color(40,40,40)
-        ])
-
         this.hp = add([
             rect(this.width-16,40, {radius:10}),
             pos(startPositon.add(8,8)),
@@ -46,6 +39,9 @@ export class SimpleBar {
     update(currentSataus: number) {
         const hppx = currentSataus/this.MaxHP * this.width-16;
         this.hp.width = hppx;
-        this.hpShadow.width = hppx+12;
+    }
+
+    updateMaxPoints(maxPoints: number) {
+        this.MaxHP = maxPoints;
     }
 }

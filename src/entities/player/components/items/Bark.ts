@@ -5,16 +5,18 @@ import { add, area, follow, loadSprite, onUpdate, polygon, pos, rotate, sprite, 
 export class Bark implements ItemInterface {
   body : GameObj<AreaComp | PosComp | SpriteComp | RotateComp | AnchorComp | OpacityComp | ScaleComp>;
   barkDistance : number = 100;
+  timerOffset : number = 0;
   AnimationTimer : number = 0;
 
-  constructor( anchorNode : GameObj<PosComp | RotateComp> ) {
+  constructor( anchorNode : GameObj<PosComp | RotateComp>, timerOffset : number ) {
     loadSprite("bark", "src/sprites/bark.png");
+    this.timerOffset = timerOffset;
     this.body = add([pos(0), anchor("botleft"), sprite("bark"), scale(), rotate(0), opacity(1), area({scale: 1.2}),"playerAttack"]);
     this.animate(anchorNode)
     this.body.onUpdate(() => {
-        if(this.AnimationTimer > 3) {
+        if(this.AnimationTimer > 3+this.timerOffset) {
             this.animate(anchorNode);
-            this.AnimationTimer = 0;
+            this.AnimationTimer = 0+this.timerOffset;
         }
         this.body.pos = anchorNode.pos.add(vec2(Math.cos(deg2rad(anchorNode.angle))*this.barkDistance, Math.sin(deg2rad(anchorNode.angle ))*this.barkDistance));
         this.body.rotateTo(anchorNode.angle + 49);  
