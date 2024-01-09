@@ -1229,10 +1229,10 @@
       return e.mergedGamepadState.stickState.get(l) || new v(0);
     }
     i(Pe, "getGamepadStick");
-    function dt3() {
+    function dt4() {
       return [...e.charInputted];
     }
-    i(dt3, "charInputted");
+    i(dt4, "charInputted");
     function Vt() {
       return [...e.gamepads];
     }
@@ -1375,7 +1375,7 @@
           });
         }
     });
-    return ge.observe(e.canvas), { dt: o, time: c, run: k2, canvas: e.canvas, fps: g, numFrames: m, quit: te, setFullscreen: K, isFullscreen: Q, setCursor: I, screenshot: P, getGamepads: Vt, getCursor: j, setCursorLocked: y, isCursorLocked: X, isTouchscreen: pe, mousePos: C, mouseDeltaPos: Ae, isKeyDown: Tt, isKeyPressed: st, isKeyPressedRepeat: on, isKeyReleased: Ot, isMouseDown: Te, isMousePressed: $, isMouseReleased: ye, isMouseMoved: Se, isGamepadButtonPressed: Rt, isGamepadButtonDown: Ye, isGamepadButtonReleased: an, getGamepadStick: Pe, charInputted: dt3, onResize: un, onKeyDown: cn, onKeyPress: hn, onKeyPressRepeat: ln, onKeyRelease: dn, onMouseDown: Pt, onMousePress: Dt, onMouseRelease: Mt, onMouseMove: Gt, onCharInput: Bt, onTouchStart: fn, onTouchMove: ct, onTouchEnd: mn, onScroll: pn, onHide: Ft, onShow: gn, onGamepadButtonDown: It, onGamepadButtonPress: Lt, onGamepadButtonRelease: wn, onGamepadStick: ht, onGamepadConnect: bn, onGamepadDisconnect: lt, events: e.events };
+    return ge.observe(e.canvas), { dt: o, time: c, run: k2, canvas: e.canvas, fps: g, numFrames: m, quit: te, setFullscreen: K, isFullscreen: Q, setCursor: I, screenshot: P, getGamepads: Vt, getCursor: j, setCursorLocked: y, isCursorLocked: X, isTouchscreen: pe, mousePos: C, mouseDeltaPos: Ae, isKeyDown: Tt, isKeyPressed: st, isKeyPressedRepeat: on, isKeyReleased: Ot, isMouseDown: Te, isMousePressed: $, isMouseReleased: ye, isMouseMoved: Se, isGamepadButtonPressed: Rt, isGamepadButtonDown: Ye, isGamepadButtonReleased: an, getGamepadStick: Pe, charInputted: dt4, onResize: un, onKeyDown: cn, onKeyPress: hn, onKeyPressRepeat: ln, onKeyRelease: dn, onMouseDown: Pt, onMousePress: Dt, onMouseRelease: Mt, onMouseMove: Gt, onCharInput: Bt, onTouchStart: fn, onTouchMove: ct, onTouchEnd: mn, onScroll: pn, onHide: Ft, onShow: gn, onGamepadButtonDown: It, onGamepadButtonPress: Lt, onGamepadButtonRelease: wn, onGamepadStick: ht, onGamepadConnect: bn, onGamepadDisconnect: lt, events: e.events };
   }, "default");
   var Re = class n11 {
     static {
@@ -2233,12 +2233,12 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       E.renderer.flush();
     }
     i(Pe, "flush");
-    function dt3() {
+    function dt4() {
       S.clear(S.COLOR_BUFFER_BIT), E.frameBuffer.bind(), S.clear(S.COLOR_BUFFER_BIT), E.bgColor || Ce(() => {
         Be({ width: we(), height: xe(), quad: new oe(0, 0, we() / Kr, xe() / Kr), tex: E.bgTex, fixed: true });
       }), E.renderer.numDraws = 0, E.fixed = false, E.transformStack.length = 0, E.transform = new Ue();
     }
-    i(dt3, "frameStart");
+    i(dt4, "frameStart");
     function Vt(t, r) {
       E.postShader = t, E.postShaderUniform = r ?? null;
     }
@@ -3919,7 +3919,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     i(pi, "onError");
     function gi(t) {
       console.error(t), te.ctx.suspend(), y.run(() => {
-        dt3(), Ce(() => {
+        dt4(), Ce(() => {
           let u = we(), a = xe(), h = { size: 36, width: u - 32 * 2, letterSpacing: 4, lineSpacing: 4, font: nn, fixed: true };
           ge({ width: u, height: a, color: J(0, 0, 255), fixed: true });
           let f = Xe({ ...h, text: "Error", pos: T(32), color: J(255, 128, 0), fixed: true });
@@ -3945,7 +3945,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     let Kt = true;
     y.run(() => {
       try {
-        k2.loaded || $() === 1 && !Kt && (k2.loaded = true, C.events.trigger("load")), !k2.loaded && n13.loadingScreen !== false || Kt ? (dt3(), li(), ft()) : (re.paused || dr(), ci(), dt3(), hi(), n13.debug !== false && di(), ft()), Kt && (Kt = false), C.events.trigger("frameEnd");
+        k2.loaded || $() === 1 && !Kt && (k2.loaded = true, C.events.trigger("load")), !k2.loaded && n13.loadingScreen !== false || Kt ? (dt4(), li(), ft()) : (re.paused || dr(), ci(), dt4(), hi(), n13.debug !== false && di(), ft()), Kt && (Kt = false), C.events.trigger("frameEnd");
       } catch (t) {
         gi(t);
       }
@@ -3998,12 +3998,12 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   var k = zo({});
   var { width, rgb, drawPolygon, deg2rad, height, area, add, pos, mousePos, polygon, circle, vec2, color, opacity, loadShaderURL, uvquad, usePostEffect, rotate, rect, loadShader, anchor, follow, outline, shader } = k;
   var { RED, BLACK, GREEN, LEFT, RIGHT, UP, DOWN } = k;
-  var { health, tween, loop, easings, wave, z, onKeyDown, drawSprite, rad2deg, onUpdate, drawLine, drawCircle, drawRect, onDraw, loadSprite, sprite, time, scale, onCollide, addKaboom, dt } = k;
+  var { health, onMouseDown, debug, tween, loop, easings, wave, text, z, onKeyDown, drawSprite, rad2deg, onUpdate, drawLine, drawCircle, drawRect, onDraw, wait, loadSprite, sprite, time, scale, onCollide, addKaboom, dt } = k;
 
   // src/entities/enemy/fly.ts
   var Fly = class {
     target;
-    #animationTimer = 0;
+    animationTimer = 0;
     body;
     constructor(target, position) {
       this.target = target;
@@ -4013,7 +4013,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         this.damageTarget();
       });
       this.body.onUpdate(() => {
-        this.body.moveTo(this.target.pos, 70);
+        this.body.moveTo(this.target.pos, 70 + 10 * target.level);
       });
       this.body.onDeath(() => {
         this.destroy();
@@ -4028,21 +4028,20 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       this.destroy();
     }
     damageTarget() {
-      this.target.damage(3);
+      this.target.damage(1);
       this.destroy();
     }
   };
 
   // src/constants/player_constants.ts
-  var PLAYER_SPEED = 100;
   var PLAYER_SPINE_LENGTH = 10;
   var SPINE_SPACEING = 10;
   var POINT_SIZE = 4;
   var BODY_R = 30;
-  var START_HEALTH = 100;
+  var START_HEALTH = 10;
 
   // src/constants/game_constants.ts
-  var DEBUG = true;
+  var DEBUG = false;
 
   // src/entities/player/components/spine.ts
   var Spine = class {
@@ -4083,6 +4082,11 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     get positions() {
       return this.spine.map((elemet) => elemet.pos);
     }
+    destroy() {
+      this.spine.forEach((element) => {
+        element.destroy();
+      });
+    }
   };
 
   // src/entities/player/components/body.ts
@@ -4091,6 +4095,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     bodyPointsL = [];
     bodyHeadPoints = [];
     bodyTailPoints = [];
+    drawEvent = null;
     constructor(spineElemetPositions, head) {
       this.bodyPointsR = this.#createFirstBodyPoints(spineElemetPositions);
       this.bodyPointsL = this.#createFirstBodyPoints(spineElemetPositions);
@@ -4167,7 +4172,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       });
     }
     draw() {
-      onDraw(() => {
+      this.drawEvent = onDraw(() => {
         const ind = [];
         const size = this.bodyPointsR.length * 2 + this.bodyHeadPoints.length * 2;
         for (let i2 = 0; i2 < size / 2; i2++) {
@@ -4194,12 +4199,29 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
       });
     }
+    destroy() {
+      this.bodyPointsR.forEach((element) => {
+        element.destroy();
+      });
+      this.bodyPointsL.forEach((element) => {
+        element.destroy();
+      });
+      this.bodyHeadPoints.forEach((element) => {
+        element.destroy();
+      });
+      this.bodyTailPoints.forEach((element) => {
+        element.destroy();
+      });
+      if (this.drawEvent != null)
+        this.drawEvent.cancel();
+      onUpdate("playerAttack", () => {
+      });
+    }
   };
 
   // src/screen/components/simpleBar.ts
   var SimpleBar = class {
     hp;
-    hpShadow;
     width;
     MaxHP;
     constructor(startPositon, width2, spriteName, spritePath, maxPoints, barColor) {
@@ -4208,25 +4230,24 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       loadSprite(spriteName, spritePath);
       add([
         pos(this.width + 10, startPositon.y - 3),
+        z(10),
         sprite(spriteName)
       ]);
       const Background = add([
         rect(this.width, 60, { radius: 15 }),
+        z(10),
         pos(startPositon),
         color(20, 20, 20)
       ]);
       const innerBackground = add([
         rect(this.width - 16, 40, { radius: 10 }),
+        z(10),
         pos(startPositon.add(8, 8)),
         color(70, 70, 70)
       ]);
-      this.hpShadow = add([
-        rect(this.width - 16, 40, { radius: 5 }),
-        pos(startPositon.add(8, 8)),
-        color(40, 40, 40)
-      ]);
       this.hp = add([
         rect(this.width - 16, 40, { radius: 10 }),
+        z(10),
         pos(startPositon.add(8, 8)),
         barColor
       ]);
@@ -4234,7 +4255,12 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     update(currentSataus) {
       const hppx = currentSataus / this.MaxHP * this.width - 16;
       this.hp.width = hppx;
-      this.hpShadow.width = hppx + 12;
+    }
+    updateMaxPoints(maxPoints) {
+      this.MaxHP = maxPoints;
+    }
+    destroy() {
+      this.hp.destroy();
     }
   };
 
@@ -4245,19 +4271,69 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
   };
 
-  // src/entities/player/components/items/Bark.ts
-  var Bark = class {
+  // src/screen/components/ExperienceBar.ts
+  var ExperienceBar = class extends SimpleBar {
+    constructor() {
+      super(vec2(10, 80), 400, "experienceBar", "src/sprites/XP.png", 10, color(25, 25, 172));
+      this.update(0);
+    }
+  };
+
+  // src/screen/upgradeMenu/components/upgradeButtoun.ts
+  var UpgradeButton = class {
+    position;
+    onClick;
+    body;
+    constructor(position, spriteName, spritePath, onClick) {
+      this.position = position;
+      this.onClick = onClick;
+      loadSprite(spriteName, spritePath);
+      this.body = add([
+        pos(position),
+        rect(145, 145, { radius: 10 }),
+        scale(2),
+        z(11),
+        anchor("center"),
+        area(),
+        color(44, 44, 44)
+      ]);
+      this.body.add([
+        sprite(spriteName),
+        anchor("center"),
+        z(12),
+        area(),
+        "button"
+      ]);
+      this.body.onClick(() => {
+        this.onClick();
+      });
+      this.body.onHover(() => {
+        this.body.scale = vec2(2.1);
+      });
+      this.body.onHoverEnd(() => {
+        this.body.scale = vec2(2);
+      });
+    }
+    destroy() {
+      this.body.destroy();
+    }
+  };
+
+  // src/entities/player/components/items/componets/SimpleAttack.ts
+  var SimpleAttack = class {
     body;
     barkDistance = 100;
+    timerOffset = 0;
     AnimationTimer = 0;
-    constructor(anchorNode) {
-      loadSprite("bark", "src/sprites/bark.png");
-      this.body = add([pos(0), anchor("botleft"), sprite("bark"), scale(), rotate(0), opacity(1), area({ scale: 1.2 }), "playerAttack"]);
+    event = null;
+    constructor(anchorNode, timerOffset, spriteName, anchorPos) {
+      this.timerOffset = timerOffset;
+      this.body = add([pos(0), anchor(anchorPos), sprite(spriteName), scale(), rotate(0), opacity(1), area({ scale: 1.2 }), "playerAttack"]);
       this.animate(anchorNode);
-      this.body.onUpdate(() => {
-        if (this.AnimationTimer > 3) {
+      this.event = this.body.onUpdate(() => {
+        if (this.AnimationTimer > 3 + this.timerOffset) {
           this.animate(anchorNode);
-          this.AnimationTimer = 0;
+          this.AnimationTimer = 0 + this.timerOffset;
         }
         this.body.pos = anchorNode.pos.add(vec2(Math.cos(deg2rad(anchorNode.angle)) * this.barkDistance, Math.sin(deg2rad(anchorNode.angle)) * this.barkDistance));
         this.body.rotateTo(anchorNode.angle + 49);
@@ -4283,32 +4359,137 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
       });
     }
-    attack() {
-      throw new Error("Method not implemented.");
+    destroy() {
+      this.body.destroy();
+      if (this.event != null)
+        this.event.cancel();
     }
   };
 
-  // src/screen/components/ExperienceBar.ts
-  var ExperienceBar = class extends SimpleBar {
-    constructor() {
-      super(vec2(10, 80), 400, "experienceBar", "src/sprites/XP.png", 20, color(25, 25, 172));
-      this.update(0);
+  // src/entities/player/components/items/Bark.ts
+  var Bark = class extends SimpleAttack {
+    constructor(anchorNode, timerOffset) {
+      loadSprite("bark", "src/sprites/bark.png");
+      super(anchorNode, timerOffset, "bark", "botleft");
+    }
+  };
+
+  // src/entities/player/components/items/Bomb.ts
+  var BOMB_RESET_TIME = 5;
+  var BOMB_DAMAGE = 5;
+  var Bomb = class {
+    timerOffset = 0;
+    event = null;
+    constructor(anchorNode, timerOffset) {
+      loadSprite("bomb", "src/sprites/bomb.png");
+      this.timerOffset = timerOffset;
+      wait(BOMB_RESET_TIME + timerOffset, () => {
+        this.event = loop(BOMB_RESET_TIME + timerOffset, () => {
+          const bomb = add([pos(anchorNode.pos), anchor("center"), scale(0.8), sprite("bomb")]);
+          this.animate(bomb);
+        });
+      });
+    }
+    animate(bomb) {
+      bomb.onUpdate(() => {
+        bomb.scale = vec2(wave(0.7, 0.9, time() + this.timerOffset));
+      });
+      wait(BOMB_RESET_TIME + this.timerOffset, () => {
+        bomb.destroy();
+        this.explode(bomb);
+      });
+    }
+    explode(bomb) {
+      let cir = add([pos(bomb.pos), area(), anchor("center"), circle(200), color(GREEN), opacity(0.6), "playerAttack"]);
+      bomb.destroy();
+      cir.onCollide("enemy", (enemy) => {
+        enemy.hurt(BOMB_DAMAGE);
+      });
+      tween(0, 200, 0.1, (r) => {
+        cir.radius = r;
+      }, easings.easeOutExpo).then(() => {
+        tween(200, 0, 0.2, (r) => {
+          cir.radius = r;
+        }, easings.easeInExpo).then(() => {
+          cir.destroy();
+        });
+      });
+    }
+    destroy() {
+      if (this.event != null)
+        this.event.cancel();
+    }
+  };
+
+  // src/entities/player/components/items/TailAttak.ts
+  var TailAttack = class extends SimpleAttack {
+    constructor(anchorNode, timerOffset) {
+      loadSprite("TailAttack", "src/sprites/TailAttack.png");
+      super(anchorNode, timerOffset, "TailAttack", "right");
+    }
+  };
+
+  // src/screen/upgradeMenu/components/UpgradeMenu.ts
+  var UpgradeMenu = class {
+    body;
+    text;
+    buttons = [];
+    constructor(player) {
+      const posCenter = vec2(width() / 2, height() / 2);
+      this.body = add([
+        rect(width() * 0.7, height() * 0.5, { radius: 20 }),
+        color(70, 70, 70),
+        z(10),
+        anchor("center"),
+        pos(posCenter),
+        "UpgradeMenu"
+      ]);
+      loadSprite("chooseText", "/src/sprites/choose.png");
+      this.text = add([sprite("chooseText"), z(15), scale(2), rotate(0), anchor("center"), pos(this.body.pos.add(vec2(0, -this.body.height / 2 + 60)))]);
+      this.text.onDraw(() => {
+        this.text.rotateTo(wave(-10, 10, time() * 2));
+        this.text.scale = vec2(wave(1.9, 2.1, time() * 3));
+      });
+      wave(-30, 30, time());
+      this.buttons.push(new UpgradeButton(vec2(posCenter), "BarkIcon", "/src/sprites/BarkIcon.png", () => {
+        this.destroy();
+        player.addItems(new Bark(player.head, player.level * 0.1));
+      }));
+      this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(-300, 0))), "BombIcon", "/src/sprites/BombIcon.png", () => {
+        this.destroy();
+        player.addItems(new Bomb(player.tail, player.level * 0.1));
+      }));
+      this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(300, 0))), "TailAttackIcon", "/src/sprites/TailAttackIcon.png", () => {
+        this.destroy();
+        player.addItems(new TailAttack(player.tail, player.level * 0.1));
+      }));
+    }
+    destroy() {
+      this.body.destroy();
+      this.text.destroy();
+      this.buttons.forEach((button) => {
+        button.destroy();
+      });
     }
   };
 
   // src/entities/player/player.ts
   var Player = class {
     #player_pos = add([pos(vec2(100))]);
+    #head;
+    #tail;
     #spine;
     #body;
     #health = START_HEALTH;
     #healthBar;
     #experience = 0;
     #experienceBar;
+    #level = 1;
+    #items = [];
     constructor(startpos = vec2(width(), height()).scale(0.5), spine_length = PLAYER_SPINE_LENGTH) {
       loadSprite("head", "src/sprites/player_head.png");
       loadSprite("tail", "src/sprites/tail.png");
-      const head = add([
+      this.#head = add([
         pos(vec2(500, 500)),
         sprite("head"),
         rotate(90),
@@ -4317,7 +4498,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         "head",
         "PlayerDamagePoint"
       ]);
-      const tail = add([
+      this.#tail = add([
         pos(vec2(500, 500)),
         sprite("tail"),
         rotate(90),
@@ -4329,42 +4510,41 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       this.#player_pos.pos = startpos;
       this.#spine = new Spine(spine_length, startpos.sub(vec2(70)));
       this.#body = new Body(this.#spine.positions, this.#player_pos.pos);
-      head.onDraw(() => {
-        head.pos = this.#player_pos.pos;
-        head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos) + 180;
+      this.#head.onDraw(() => {
+        this.#head.pos = this.#player_pos.pos;
+        this.#head.angle = this.#spine.getNodeAt(0).pos.angle(this.#head.pos) + 180;
       });
-      tail.onDraw(() => {
-        tail.pos = this.#spine.getNodeAt(this.#spine.length - 1).pos;
-        tail.angle = this.#spine.getNodeAt(this.#spine.length - 2).pos.angle(tail.pos) + 180 + 10 * Math.sin(time() * 10);
+      this.#tail.onDraw(() => {
+        this.#tail.pos = this.#spine.getNodeAt(this.#spine.length - 1).pos;
+        this.#tail.angle = this.#spine.getNodeAt(this.#spine.length - 2).pos.angle(this.#tail.pos) + 180 + 10 * Math.sin(time() * 10);
       });
-      this.#spine.update(head);
+      this.#spine.update(this.#head);
       this.#body.update(this.#spine);
       this.#body.draw();
       this.#body.updateHead(this.#spine.getNodeAt(0), this.#player_pos);
       this.#body.updateTail(this.#spine.getNodeAt(this.#spine.length - 1));
       this.setupMovement();
-      const ba = new Bark(head);
       this.#healthBar = new HealthBar();
       this.#experienceBar = new ExperienceBar();
     }
-    get headNode() {
+    get headPos() {
       return this.#player_pos;
+    }
+    get head() {
+      return this.#head;
+    }
+    get health() {
+      return this.#health;
+    }
+    get tail() {
+      return this.#tail;
     }
     get pos() {
       return this.#player_pos.pos;
     }
     setupMovement() {
-      onKeyDown("a", () => {
-        this.#player_pos.move(LEFT.scale(PLAYER_SPEED));
-      });
-      onKeyDown("w", () => {
-        this.#player_pos.move(UP.scale(PLAYER_SPEED));
-      });
-      onKeyDown("s", () => {
-        this.#player_pos.move(DOWN.scale(PLAYER_SPEED));
-      });
-      onKeyDown("d", () => {
-        this.#player_pos.move(RIGHT.scale(PLAYER_SPEED));
+      onMouseDown(() => {
+        this.#player_pos.moveTo(mousePos(), 100);
       });
     }
     damage(amount) {
@@ -4372,16 +4552,57 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       this.#healthBar.update(this.#health);
     }
     addExperience(amount) {
-      this.#experience += amount;
+      if (this.#experience + amount > this.#level * 10) {
+        this.levelUp();
+      } else {
+        this.#experience += amount;
+        this.#experienceBar.update(this.#experience);
+      }
+    }
+    get level() {
+      return this.#level;
+    }
+    levelUp() {
+      this.#level++;
+      new UpgradeMenu(this);
+      this.#experience = 0;
       this.#experienceBar.update(this.#experience);
+      this.#experienceBar.updateMaxPoints(this.#level * 10);
+      this.#health = START_HEALTH;
+      this.#healthBar.update(this.#health);
+    }
+    addItems(item) {
+      this.#items.push(item);
+    }
+    destroy() {
+      this.#player_pos.destroy();
+      this.#head.destroy();
+      this.#tail.destroy();
+      this.#spine.destroy();
+      this.#body.destroy();
+      this.#healthBar.destroy();
+      this.#experienceBar.destroy();
+      this.#items.forEach((item) => {
+        item.destroy();
+      });
     }
   };
 
   // src/main.ts
   var p = new Player();
+  new UpgradeMenu(p);
+  loop(1, () => {
+    if (p.health < 1) {
+      p.destroy();
+      p = new Player();
+      new UpgradeMenu(p);
+    }
+  });
   loop(3, () => {
-    const angle = Math.random() * 2 * Math.PI;
-    const point = p.pos.add(vec2(Math.cos(angle) * 1e3, Math.sin(angle) * 1e3));
-    new Fly(p, point);
+    for (let i2 = 0; i2 < 1 * p.level; i2++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const point = p.pos.add(vec2(Math.cos(angle) * 1e3, Math.sin(angle) * 1e3));
+      new Fly(p, point);
+    }
   });
 })();
