@@ -1,8 +1,7 @@
 import { AnchorComp, AreaComp, GameObj, PolygonComp, PosComp, RotateComp, SpriteComp, Vec2 , HealthComp, OpacityComp, ScaleComp} from "kaboom";
-import { ItemInterface } from "./ItemInterface.js";
 import { add, area, follow, loadSprite, onUpdate, polygon, pos, rotate, sprite, vec2 , anchor, deg2rad, wave, time, opacity, tween, dt, easings, scale} from "../../../../game.js";
 
-export class Bark implements ItemInterface {
+export class Bark  {
   body : GameObj<AreaComp | PosComp | SpriteComp | RotateComp | AnchorComp | OpacityComp | ScaleComp>;
   barkDistance : number = 100;
   timerOffset : number = 0;
@@ -44,9 +43,5 @@ export class Bark implements ItemInterface {
         })
     });
 
-  }
-
-  attack(): void {
-    throw new Error("Method not implemented.");
   }
 }
