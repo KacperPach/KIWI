@@ -40,6 +40,7 @@ import { HealthBar } from "../../screen/components/HealthBar.js";
 import { Bark } from "./components/items/Bark.js";
 import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
 import { UpgradeMenu } from "../../screen/upgradeMenu/components/UpgradeMenu.js";
+import { Bomb } from "./components/items/Bomb.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
@@ -101,8 +102,9 @@ export class Player {
 
     this.setupMovement();
 
-    const ba = new Bark(this.#head,0);
-    const ba2 = new Bark(this.#head,0.1);
+     const ba = new Bark(this.#head,0);
+    // const ba2 = new Bark(this.#head,0.1);
+    new Bomb(this.#spine.getNodeAt(this.#spine.length-1), 0.1);
 
     this.#healthBar = new HealthBar();
     this.#experienceBar = new ExperienceBar();
