@@ -3998,7 +3998,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   var k = zo({});
   var { width, rgb, drawPolygon, deg2rad, height, area, add, pos, mousePos, polygon, circle, vec2, color, opacity, loadShaderURL, uvquad, usePostEffect, rotate, rect, loadShader, anchor, follow, outline, shader } = k;
   var { RED, BLACK, GREEN, LEFT, RIGHT, UP, DOWN } = k;
-  var { health, onMouseDown, tween, loop, easings, wave, z, onKeyDown, drawSprite, rad2deg, onUpdate, drawLine, drawCircle, drawRect, onDraw, loadSprite, sprite, time, scale, onCollide, addKaboom, dt } = k;
+  var { health, tween, loop, easings, wave, z, onKeyDown, drawSprite, rad2deg, onUpdate, drawLine, drawCircle, drawRect, onDraw, loadSprite, sprite, time, scale, onCollide, addKaboom, dt } = k;
 
   // src/entities/enemy/fly.ts
   var Fly = class {
@@ -4007,7 +4007,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     body;
     constructor(target, position) {
       this.target = target;
-      loadSprite("fly", "/src/sprites/fly.png");
+      loadSprite("fly", "src/sprites/fly.png");
       this.body = add([pos(position), sprite("fly"), area(), health(1), "enemy"]);
       this.body.onCollide("PlayerDamagePoint", () => {
         this.damageTarget();
@@ -4034,6 +4034,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   };
 
   // src/constants/player_constants.ts
+  var PLAYER_SPEED = 100;
   var PLAYER_SPINE_LENGTH = 10;
   var SPINE_SPACEING = 10;
   var POINT_SIZE = 4;
@@ -4240,7 +4241,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   // src/screen/components/HealthBar.ts
   var HealthBar = class extends SimpleBar {
     constructor() {
-      super(vec2(10, 10), 400, "healthBar", "../src/sprites/HP.png", START_HEALTH, color(192, 17, 17));
+      super(vec2(10, 10), 400, "healthBar", "src/sprites/HP.png", START_HEALTH, color(192, 17, 17));
     }
   };
 
@@ -4250,7 +4251,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     barkDistance = 100;
     AnimationTimer = 0;
     constructor(anchorNode) {
-      loadSprite("bark", "../src/sprites/bark.png");
+      loadSprite("bark", "src/sprites/bark.png");
       this.body = add([pos(0), anchor("botleft"), sprite("bark"), scale(), rotate(0), opacity(1), area({ scale: 1.2 }), "playerAttack"]);
       this.animate(anchorNode);
       this.body.onUpdate(() => {
@@ -4290,7 +4291,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   // src/screen/components/ExperienceBar.ts
   var ExperienceBar = class extends SimpleBar {
     constructor() {
-      super(vec2(10, 80), 400, "experienceBar", "../src/sprites/XP.png", 20, color(25, 25, 172));
+      super(vec2(10, 80), 400, "experienceBar", "src/sprites/XP.png", 20, color(25, 25, 172));
       this.update(0);
     }
   };
@@ -4298,7 +4299,6 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   // src/entities/player/player.ts
   var Player = class {
     #player_pos = add([pos(vec2(100))]);
-    #head;
     #spine;
     #body;
     #health = START_HEALTH;
@@ -4306,9 +4306,9 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     #experience = 0;
     #experienceBar;
     constructor(startpos = vec2(width(), height()).scale(0.5), spine_length = PLAYER_SPINE_LENGTH) {
-      loadSprite("head", "../src/sprites/player_head.png");
-      loadSprite("tail", "../src/sprites/tail.png");
-      this.#head = add([
+      loadSprite("head", "src/sprites/player_head.png");
+      loadSprite("tail", "src/sprites/tail.png");
+      const head = add([
         pos(vec2(500, 500)),
         sprite("head"),
         rotate(90),
@@ -4329,21 +4329,21 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       this.#player_pos.pos = startpos;
       this.#spine = new Spine(spine_length, startpos.sub(vec2(70)));
       this.#body = new Body(this.#spine.positions, this.#player_pos.pos);
-      this.#head.onDraw(() => {
-        this.#head.pos = this.#player_pos.pos;
-        this.#head.angle = this.#spine.getNodeAt(0).pos.angle(this.#head.pos) + 180;
+      head.onDraw(() => {
+        head.pos = this.#player_pos.pos;
+        head.angle = this.#spine.getNodeAt(0).pos.angle(head.pos) + 180;
       });
       tail.onDraw(() => {
         tail.pos = this.#spine.getNodeAt(this.#spine.length - 1).pos;
         tail.angle = this.#spine.getNodeAt(this.#spine.length - 2).pos.angle(tail.pos) + 180 + 10 * Math.sin(time() * 10);
       });
-      this.#spine.update(this.#head);
+      this.#spine.update(head);
       this.#body.update(this.#spine);
       this.#body.draw();
       this.#body.updateHead(this.#spine.getNodeAt(0), this.#player_pos);
       this.#body.updateTail(this.#spine.getNodeAt(this.#spine.length - 1));
       this.setupMovement();
-      const ba = new Bark(this.#head);
+      const ba = new Bark(head);
       this.#healthBar = new HealthBar();
       this.#experienceBar = new ExperienceBar();
     }
@@ -4354,8 +4354,17 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       return this.#player_pos.pos;
     }
     setupMovement() {
-      onMouseDown(() => {
-        this.#player_pos.moveTo(mousePos(), 100);
+      onKeyDown("a", () => {
+        this.#player_pos.move(LEFT.scale(PLAYER_SPEED));
+      });
+      onKeyDown("w", () => {
+        this.#player_pos.move(UP.scale(PLAYER_SPEED));
+      });
+      onKeyDown("s", () => {
+        this.#player_pos.move(DOWN.scale(PLAYER_SPEED));
+      });
+      onKeyDown("d", () => {
+        this.#player_pos.move(RIGHT.scale(PLAYER_SPEED));
       });
     }
     damage(amount) {
@@ -4372,7 +4381,6 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   var p = new Player();
   loop(3, () => {
     const angle = Math.random() * 2 * Math.PI;
-    console.log(angle);
     const point = p.pos.add(vec2(Math.cos(angle) * 1e3, Math.sin(angle) * 1e3));
     new Fly(p, point);
   });
