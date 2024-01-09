@@ -1,18 +1,21 @@
-import {  GameObj, PosComp,  ScaleComp } from "kaboom";
+import {  EventController, GameObj, PosComp,  ScaleComp } from "kaboom";
 import Shape from "kaboom"
 import { GREEN, RED, add, anchor, area, circle, color, easings, loadSprite, loop, opacity, pos, rect, scale, sprite, time, tween, vec2, wait, wave } from "../../../../game.js";
+import { AttackInterface } from "./componets/AttackInterface.js";
 
 const BOMB_RESET_TIME = 5;
 const BOMB_DAMAGE = 5;
 
-export class Bomb {
+export class Bomb implements AttackInterface {
     timerOffset : number = 0;
+    event : EventController | null = null;
+
     constructor( anchorNode : GameObj<PosComp>, timerOffset : number ) {
         loadSprite("bomb", "src/sprites/bomb.png");
         this.timerOffset = timerOffset;
         
         wait(BOMB_RESET_TIME+timerOffset, () => {
-        loop(BOMB_RESET_TIME+timerOffset, () => { 
+        this.event = loop(BOMB_RESET_TIME+timerOffset, () => { 
             const bomb = add([pos(anchorNode.pos), anchor("center"), scale(0.8), sprite("bomb")])
             this.animate(bomb);
         })})
@@ -29,7 +32,6 @@ export class Bomb {
     }
 
     explode(bomb : GameObj<PosComp>) { 
-        // Area only supports rect and polygon 😡😡😡 (rect for now)
         let cir = add([pos(bomb.pos), area(), anchor("center"), circle(200), color(GREEN), opacity(0.6), "playerAttack"]);
         bomb.destroy();
         
@@ -47,5 +49,10 @@ export class Bomb {
                 cir.destroy();
             })
         })
+    }
+
+    destroy(): void {
+        if(this.event != null)
+            this.event.cancel();
     }
 }

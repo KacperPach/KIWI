@@ -1,17 +1,19 @@
-import { AnchorComp, AreaComp, GameObj, PolygonComp, PosComp, RotateComp, SpriteComp, Vec2 , HealthComp, OpacityComp, ScaleComp, Anchor} from "kaboom";
+import { AnchorComp, AreaComp, GameObj, PolygonComp, PosComp, RotateComp, SpriteComp, Vec2 , HealthComp, OpacityComp, ScaleComp, Anchor, EventController} from "kaboom";
 import { add, area, follow, loadSprite, onUpdate, polygon, pos, rotate, sprite, vec2 , anchor, deg2rad, wave, time, opacity, tween, dt, easings, scale} from "../../../../../game.js";
+import { AttackInterface } from "./AttackInterface.js";
 
-export class SimpleAttack {
+export class SimpleAttack implements AttackInterface{
   body : GameObj<AreaComp | PosComp | SpriteComp | RotateComp | AnchorComp | OpacityComp | ScaleComp>;
   barkDistance : number = 100;
   timerOffset : number = 0;
   AnimationTimer : number = 0;
+  event : EventController | null = null;
 
   constructor( anchorNode : GameObj<PosComp | RotateComp>, timerOffset : number , spriteName : string, anchorPos : Anchor) {
     this.timerOffset = timerOffset;
     this.body = add([pos(0), anchor(anchorPos), sprite(spriteName), scale(), rotate(0), opacity(1), area({scale: 1.2}),"playerAttack"]);
     this.animate(anchorNode)
-    this.body.onUpdate(() => {
+    this.event = this.body.onUpdate(() => {
         if(this.AnimationTimer > 3+this.timerOffset) {
             this.animate(anchorNode);
             this.AnimationTimer = 0+this.timerOffset;
@@ -42,5 +44,10 @@ export class SimpleAttack {
         })
     });
 
+  }
+  destroy(): void {
+    this.body.destroy();
+    if(this.event != null)
+        this.event.cancel();
   }
 }

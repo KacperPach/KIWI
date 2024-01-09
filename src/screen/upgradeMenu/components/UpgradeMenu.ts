@@ -34,9 +34,9 @@ export class UpgradeMenu {
         });
         wave(-30,30, time())
 
-        this.buttons.push(new UpgradeButton(vec2(posCenter), "BarkIcon", "/src/sprites/BarkIcon.png", () => { this.destroy(); new Bark(player.head, player.level*0.1)}));
-        this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(-300,0))), "BombIcon", "/src/sprites/BombIcon.png", () => {this.destroy(); new Bomb(player.tail, player.level*0.1)}));
-        this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(300,0))), "TailAttackIcon", "/src/sprites/TailAttackIcon.png",() => {this.destroy(); new TailAttack(player.tail, player.level*0.1)}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter), "BarkIcon", "/src/sprites/BarkIcon.png", () => { this.destroy(); player.addItems(new Bark(player.head, player.level*0.1))}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(-300,0))), "BombIcon", "/src/sprites/BombIcon.png", () => {this.destroy(); player.addItems(new Bomb(player.tail, player.level*0.1))}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter.add(vec2(300,0))), "TailAttackIcon", "/src/sprites/TailAttackIcon.png",() => {this.destroy(); player.addItems(new TailAttack(player.tail, player.level*0.1))}));
 
     }
     

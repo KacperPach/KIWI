@@ -37,7 +37,7 @@ export class Fly implements EnemyInterface {
   }
 
   damageTarget() {
-    this.target.damage(3);
+    this.target.damage(1);
     this.destroy();
   }
 }

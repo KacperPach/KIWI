@@ -50,4 +50,10 @@ export default class Spine{
     get positions () {
         return this.spine.map(elemet => elemet.pos)
     }
+
+    destroy () {
+        this.spine.forEach(element => {
+            element.destroy();
+        });
+    }
 }

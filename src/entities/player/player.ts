@@ -42,6 +42,7 @@ import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
 import { UpgradeMenu } from "../../screen/upgradeMenu/components/UpgradeMenu.js";
 import { Bomb } from "./components/items/Bomb.js";
 import { TailAttack } from "./components/items/TailAttak.js";
+import { AttackInterface } from "./components/items/componets/AttackInterface.js";
 
 export class Player {
   #player_pos: GameObj<PosComp> = add([pos(vec2(100))]);
@@ -54,6 +55,7 @@ export class Player {
   #experience: number = 0;
   #experienceBar: ExperienceBar;
   #level: number = 1;
+  #items: Array<AttackInterface> = [];
 
   constructor(
     startpos = vec2(width(), height()).scale(0.5),
@@ -116,6 +118,10 @@ export class Player {
     return this.#head;
   }
 
+  get health() {
+    return this.#health;
+  }
+
   get tail() {
     return this.#tail;
   }
@@ -156,5 +162,22 @@ export class Player {
     this.#experienceBar.updateMaxPoints(this.#level*10);
     this.#health = START_HEALTH;
     this.#healthBar.update(this.#health);
+  }
+
+  addItems(item: AttackInterface) {
+    this.#items.push(item);
+  }
+
+  destroy() {
+    this.#player_pos.destroy();
+    this.#head.destroy();
+    this.#tail.destroy();
+    this.#spine.destroy();
+    this.#body.destroy();
+    this.#healthBar.destroy();
+    this.#experienceBar.destroy();
+    this.#items.forEach((item) => {
+      item.destroy();
+    });
   }
 }
