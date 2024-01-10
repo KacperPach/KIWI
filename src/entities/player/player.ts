@@ -134,8 +134,6 @@ export class Player {
   setupMovement() {
     onMouseDown(() => {
       this.#player_pos.moveTo(toWorld(mousePos()), 100);
-      console.log(this.#player_pos.pos);
-      
     });
   }
 

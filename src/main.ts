@@ -6,7 +6,6 @@ import { UpgradeMenu } from './screen/upgradeMenu/UpgradeMenu.js';
 const f = add([text("test") ,{ scale: 4}]);
 f.onDraw(() => { f.text = debug.fps().toString() });
 
-camScale(vec2(0.5));
 if (mobileCheck())
     camScale(vec2(0.5));
 
