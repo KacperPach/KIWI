@@ -3,8 +3,6 @@ import { Player } from './entities/player/player.js';
 import { add, camPos, camScale, debug, drawText, height, loop, mobileCheck, onUpdate, pushScale, scale, text, vec2, width } from './game.js';
 import { UpgradeMenu } from './screen/upgradeMenu/UpgradeMenu.js';
 
-const f = add([text("test") ,{ scale: 4}]);
-f.onDraw(() => { f.text = debug.fps().toString() });
 
 if (mobileCheck())
     camScale(vec2(0.5));
