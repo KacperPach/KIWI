@@ -41,9 +41,9 @@ export class UpgradeMenu {
 
         const MOBILE_BUTTON_OFFSET = mobileCheck() ? vec2(0,150) : vec2(300,0);
 
-        this.buttons.push(new UpgradeButton(vec2(posCenter), "BarkIcon", "/src/sprites/BarkIcon.png", () => { this.destroy(); player.addItems(new Bark(player.head, player.level*0.1))}));
-        this.buttons.push(new UpgradeButton(vec2(posCenter.sub(MOBILE_BUTTON_OFFSET)), "BombIcon", "/src/sprites/BombIcon.png", () => {this.destroy(); player.addItems(new Bomb(player.tail, player.level*0.1))}));
-        this.buttons.push(new UpgradeButton(vec2(posCenter.add(MOBILE_BUTTON_OFFSET)), "TailAttackIcon", "/src/sprites/TailAttackIcon.png",() => {this.destroy(); player.addItems(new TailAttack(player.tail, player.level*0.1))}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter), "BarkIcon", "src/sprites/BarkIcon.png", () => { this.destroy(); player.addItems(new Bark(player.head, player.level*0.1))}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter.sub(MOBILE_BUTTON_OFFSET)), "BombIcon", "src/sprites/BombIcon.png", () => {this.destroy(); player.addItems(new Bomb(player.tail, player.level*0.1))}));
+        this.buttons.push(new UpgradeButton(vec2(posCenter.add(MOBILE_BUTTON_OFFSET)), "TailAttackIcon", "src/sprites/TailAttackIcon.png",() => {this.destroy(); player.addItems(new TailAttack(player.tail, player.level*0.1))}));
         
     }
     
