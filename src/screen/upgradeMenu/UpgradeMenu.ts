@@ -1,5 +1,5 @@
 import { GameObj, PosComp, RectComp, RotateComp, ScaleComp } from "kaboom";
-import { add, anchor, color, health, height, loadSprite, onUpdate, pos, rect, rotate, scale, sprite, text, time, vec2, wave, width, z } from "../../game.js";
+import { add, anchor, color, health, height, loadSprite, onUpdate, opacity, pos, rect, rotate, scale, sprite, text, time, vec2, wave, width, z } from "../../game.js";
 import { UpgradeButton } from "./components/upgradeButtoun.js";
 import { Player } from "../../entities/player/player.js";
 import { Bark } from "../../entities/player/components/items/Bark.js";
@@ -19,7 +19,7 @@ export class UpgradeMenu {
         const posCenter = vec2(width()/2, height()/2);
 
         this.body = add([ 
-                rect(width()*0.7, height()*0.5, {radius: 20}),
+                rect(width(), 350),
                 color(70,70,70),
                 z(10),
                 anchor('center'),
@@ -27,7 +27,7 @@ export class UpgradeMenu {
                 "UpgradeMenu"]);
 
         loadSprite("chooseText", "/src/sprites/choose.png");
-        this.text = add([ sprite("chooseText"), z(15), scale(2), rotate(0), anchor("center"), pos(this.body.pos.add(vec2(0, -this.body.height/2 + 60)))]);
+        this.text = add([ sprite("chooseText"), z(15), scale(2), rotate(0), anchor("center"), pos(this.body.pos.add(vec2(0, -200)))]);
         this.text.onDraw(() => {
             this.text.rotateTo(wave(-10, 10, time()*2));
             this.text.scale = vec2(wave(1.9, 2.1, time()*3));
