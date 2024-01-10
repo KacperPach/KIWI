@@ -23,6 +23,7 @@ import {
   scale,
   sprite,
   time,
+  toWorld,
   uvquad,
   vec2,
   width,
@@ -36,10 +37,10 @@ import {
 } from "../../constants/player_constants.js";
 import Body from "./components/body.js";
 import { DEBUG } from "../../constants/game_constants.js";
-import { HealthBar } from "../../screen/components/HealthBar.js";
+import { HealthBar } from "../../screen/statusBars/HealthBar.js";
 import { Bark } from "./components/items/Bark.js";
-import { ExperienceBar } from "../../screen/components/ExperienceBar.js";
-import { UpgradeMenu } from "../../screen/upgradeMenu/components/UpgradeMenu.js";
+import { ExperienceBar } from "../../screen/statusBars/ExperienceBar.js";
+import { UpgradeMenu } from "../../screen/upgradeMenu/UpgradeMenu.js";
 import { Bomb } from "./components/items/Bomb.js";
 import { TailAttack } from "./components/items/TailAttak.js";
 import { AttackInterface } from "./components/items/componets/AttackInterface.js";
@@ -132,7 +133,9 @@ export class Player {
 
   setupMovement() {
     onMouseDown(() => {
-      this.#player_pos.moveTo(mousePos(), 100);
+      this.#player_pos.moveTo(toWorld(mousePos()), 100);
+      console.log(this.#player_pos.pos);
+      
     });
   }
 
