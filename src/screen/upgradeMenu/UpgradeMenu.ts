@@ -1,10 +1,10 @@
 import { GameObj, PosComp, RectComp, RotateComp, ScaleComp } from "kaboom";
-import { add, anchor, color, health, height, loadSprite, onUpdate, pos, rect, rotate, scale, sprite, text, time, vec2, wave, width, z } from "../../../game.js";
-import { UpgradeButton } from "./upgradeButtoun.js";
-import { Player } from "../../../entities/player/player.js";
-import { Bark } from "../../../entities/player/components/items/Bark.js";
-import { Bomb } from "../../../entities/player/components/items/Bomb.js";
-import { TailAttack } from "../../../entities/player/components/items/TailAttak.js";
+import { add, anchor, color, health, height, loadSprite, onUpdate, pos, rect, rotate, scale, sprite, text, time, vec2, wave, width, z } from "../../game.js";
+import { UpgradeButton } from "./components/upgradeButtoun.js";
+import { Player } from "../../entities/player/player.js";
+import { Bark } from "../../entities/player/components/items/Bark.js";
+import { Bomb } from "../../entities/player/components/items/Bomb.js";
+import { TailAttack } from "../../entities/player/components/items/TailAttak.js";
 
 export class UpgradeMenu {
 

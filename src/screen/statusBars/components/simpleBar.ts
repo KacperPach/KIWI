@@ -1,6 +1,6 @@
 import { Rect, RectComp , GameObj, Vec2, ColorComp} from "kaboom";
-import { START_HEALTH } from "../../constants/player_constants.js";
-import { RED, add, color, loadSprite, outline, pos, rect, sprite, z } from "../../game.js";
+import { START_HEALTH } from "../../../constants/player_constants.js";
+import { RED, add, color, loadSprite, outline, pos, rect, sprite, z } from "../../../game.js";
 
 export class SimpleBar {
     hp : GameObj<RectComp>;

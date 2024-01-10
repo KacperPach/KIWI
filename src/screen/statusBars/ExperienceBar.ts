@@ -1,5 +1,5 @@
 import { color, vec2 } from "../../game.js";
-import { SimpleBar } from "./simpleBar.js";
+import { SimpleBar } from "./components/simpleBar.js";
 
 export class ExperienceBar extends SimpleBar {
     constructor() {
