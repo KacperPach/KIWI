@@ -28,7 +28,7 @@ export class UpgradeMenu {
                 fixed(),
                 "UpgradeMenu"]);
  
-        loadSprite("chooseText", "/src/sprites/choose.png");
+        loadSprite("chooseText", "src/sprites/choose.png");
 
         const MAX_TEXT_SCALE = mobileCheck() ? 1.1 : 2.1;
 
