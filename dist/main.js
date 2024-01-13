@@ -4475,7 +4475,7 @@
         fixed(),
         "UpgradeMenu"
       ]);
-      loadSprite("chooseText", "/src/sprites/choose.png");
+      loadSprite("chooseText", "src/sprites/choose.png");
       const MAX_TEXT_SCALE = mobileCheck() ? 1.1 : 2.1;
       this.text = add([sprite("chooseText"), z(15), scale(MAX_TEXT_SCALE), fixed(), rotate(0), anchor("center"), pos(this.body.pos.add(vec2(0, -200)))]);
       this.text.onDraw(() => {
