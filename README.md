@@ -3,7 +3,7 @@ kiwi is a simple vampire survivors type game
 
 ![KIWI](/src/sprites/paw.png)
 
-#TO RUN
+## TO RUN
 
 load packages:
 `npm i`
